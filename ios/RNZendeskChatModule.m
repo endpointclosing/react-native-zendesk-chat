@@ -48,4 +48,11 @@ RCT_EXPORT_METHOD(startChat:(NSDictionary *)options) {
   });
 }
 
+RCT_REMAP_METHOD(getUnreadMessageCount, resolver: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  NSInteger zendeskUnreadMessageCount = [[ZDCChat instance] unreadMessagesCount];
+  NSNumber *zendeskUnreadMessageCountNum = [NSNumber numberWithInteger:zendeskUnreadMessageCount];
+  resolve(zendeskUnreadMessageCountNum);
+}
+
+
 @end
