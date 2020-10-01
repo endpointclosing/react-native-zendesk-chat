@@ -22,8 +22,6 @@ import java.lang.String;
 import java.util.ArrayList;
 
 
-// import java.lang.String;
-
 public class RNZendeskChatModule extends ReactContextBaseJavaModule {
     private ReactContext mReactContext;
 
