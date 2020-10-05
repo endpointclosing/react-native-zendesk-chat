@@ -41,7 +41,7 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
         VisitorInfo.Builder();
 
         if (options.hasKey("name")) {
-            builder.name("name");
+            builder.email(options.getString("name"));
         }
         if (options.hasKey("email")) {
             builder.email(options.getString("email"));
@@ -67,14 +67,7 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
         setVisitorInfo(options);
         String[] tags = getTags(options);
 
-        PreChatForm preChatForm = new PreChatForm.Builder()
-            .name(PreChatForm.Field.REQUIRED)
-            .email(PreChatForm.Field.REQUIRED)
-            .build();
-
         ZopimChat.SessionConfig context = new ZopimChat.SessionConfig()
-            .preChatForm(preChatForm)
-            .department("A department")
             .tags(tags);
         
          Activity activity = getCurrentActivity();
