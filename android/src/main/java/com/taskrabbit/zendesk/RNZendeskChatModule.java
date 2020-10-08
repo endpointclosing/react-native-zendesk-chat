@@ -3,16 +3,24 @@ package com.taskrabbit.zendesk;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.zopim.android.sdk.api.ZopimChat;
+import com.zopim.android.sdk.prechat.PreChatForm;
+import com.zopim.android.sdk.prechat.ZopimChatActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.zopim.android.sdk.api.ZopimChat;
+import com.zopim.android.sdk.prechat.PreChatForm;
+import com.zopim.android.sdk.api.ZopimChatApi;
+
 import com.zopim.android.sdk.model.VisitorInfo;
-import com.zopim.android.sdk.prechat.ZopimChatActivity;
 
 import java.lang.String;
+import java.util.ArrayList;
+
 
 public class RNZendeskChatModule extends ReactContextBaseJavaModule {
     private ReactContext mReactContext;
@@ -29,10 +37,11 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setVisitorInfo(ReadableMap options) {
-        VisitorInfo.Builder builder = new VisitorInfo.Builder();
+        VisitorInfo.Builder builder = new 
+        VisitorInfo.Builder();
 
         if (options.hasKey("name")) {
-            builder.name(options.getString("name"));
+            builder.email(options.getString("name"));
         }
         if (options.hasKey("email")) {
             builder.email(options.getString("email"));
@@ -44,6 +53,8 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
         VisitorInfo visitorData = builder.build();
 
         ZopimChat.setVisitorInfo(visitorData);
+
+        
     }
 
     @ReactMethod
@@ -54,9 +65,30 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void startChat(ReadableMap options) {
         setVisitorInfo(options);
-        Activity activity = getCurrentActivity();
-        if (activity != null) {
-            activity.startActivity(new Intent(mReactContext, ZopimChatActivity.class));
+        String[] tags = getTags(options);
+
+        ZopimChat.SessionConfig context = new ZopimChat.SessionConfig()
+            .tags(tags);
+        
+         Activity activity = getCurrentActivity();
+         if (activity != null) {
+            ZopimChatActivity.startActivity(activity, context);
         }
+    }
+
+    private static String[] getTags(ReadableMap options) {
+        ArrayList<String> result = new ArrayList();
+
+        if (!options.hasKey("tags")) {
+            return new String[0];
+        }
+        ReadableArray arr = options.getArray("tags");
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.isNull(i)) {
+                continue;
+            }
+            result.add(arr.getString(i));
+        }
+        return result.toArray(new String[0]);
     }
 }
