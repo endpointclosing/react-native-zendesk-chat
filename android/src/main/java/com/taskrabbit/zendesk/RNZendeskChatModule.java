@@ -41,7 +41,7 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
         VisitorInfo.Builder();
 
         if (options.hasKey("name")) {
-            builder.email(options.getString("name"));
+            builder.name(options.getString("name"));
         }
         if (options.hasKey("email")) {
             builder.email(options.getString("email"));
@@ -70,6 +70,10 @@ public class RNZendeskChatModule extends ReactContextBaseJavaModule {
         ZopimChat.SessionConfig context = new ZopimChat.SessionConfig()
             .tags(tags);
         
+        if (options.hasKey("department")) {
+            context.department(options.getString("department"));
+        }
+
          Activity activity = getCurrentActivity();
          if (activity != null) {
             ZopimChatActivity.startActivity(activity, context);
