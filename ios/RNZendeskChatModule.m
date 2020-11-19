@@ -201,4 +201,12 @@ RCT_EXPORT_METHOD(registerPushToken:(NSString *)token) {
 	});
 }
 
+RCT_REMAP_METHOD(getUnreadMessageCount, resolver: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  dispatch_sync(dispatch_get_main_queue(), ^{
+    NSNumber *zendeskUnreadMessageCountNum = [NSNumber numberWithInteger:zendeskUnreadMessageCount];	    NSInteger zendeskUnreadMessageCount = [[ZDCChat instance] unreadMessagesCount];
+    resolve(zendeskUnreadMessageCountNum);	    NSNumber *zendeskUnreadMessageCountNum = [NSNumber numberWithInteger:zendeskUnreadMessageCount];
+    resolve(zendeskUnreadMessageCountNum);
+  });
+}
+
 @end

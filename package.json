@@ -1,6 +1,6 @@
 {
-	"name": "react-native-zendesk-chat",
-	"version": "0.4.0",
+	"name": "@endpoint/react-native-zendesk-chat",
+	"version": "1.0.0",
 	"description": "React Native Wrapper around Zopim Zendesk Chat",
 	"main": "index.js",
 	"types": "RNZendeskChat.d.ts",
@@ -24,8 +24,9 @@
 	],
 	"homepage": "https://github.com/taskrabbit/react-native-zendesk-chat.git",
 	"bugs": "https://github.com/taskrabbit/react-native-zendesk-chat/issues",
-	"author": "jrichardlai",
+	"author": "Endpoint Engineering <engineering@endpointclosing.com>",
 	"contributors": [
+		"jrichardlai",
 		"Brian Leonard <brian@taskrabbit.com>",
 		"Frederic Barthelemy <frederic@taskrabbit.com>",
 		"Jean-Richard Lai <github.com/jrichardlai>",
